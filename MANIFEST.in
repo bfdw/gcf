@@ -1,0 +1,2 @@
+# Include the CSV data
+include gcf/*.csv
