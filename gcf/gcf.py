@@ -11,42 +11,40 @@ import gcf_scrape as gs
 @click.group(invoke_without_command=True, no_args_is_help=True)
 @click.option('--dj', '-d', default='',
               help=u'Search by dj, such as -d \'西蒙#四十二\' or \'西蒙\'.\
-              Use #, if you need search a dj group.')
+              Use #, if you need a dj group.')
 @click.option('--prog', '-p', default='',
-              help='Search by program,\ such as -p \'gadio\'.\
+              help='Search by program, such as -p \'gadio\'.\
               Use #, if you need multiple programs.')
 @click.option('--title', '-tt', default='',
-              help=u'Search by program, such as -tt \'核聚变\'.')
+              help=u'Search by program, such as -tt \'的\'.')
 @click.option('--time', '-t', nargs=2, default=('19850611', '20850611'),
               help='Search by release time, such as -t 20180101 20180302')
 @click.option('--expt', '-e', default=False, is_flag=True,
               help='Export data to a cvs file')
 @click.option('--col', '-c', default='date#title#dj',
               help='Show data with specific columns as -tb \'date#title#dj\'\
-              date,title,dj,program,index,url,mp3.')
+              Columns set: date,title,dj,program,index,url,mp3.')
 @click.option('--path', '-pt', default='',
               help='Give the path to loading another cvs data.')
+@click.option('--recent', '-r', default=9999,
+              help='Show the most recent gadios.')
 @click.pass_context
-def gcf(ctx, dj, prog, time, title, expt, col, path):
+def gcf(ctx, dj, prog, time, title, expt, col, path, recent):
     """\b
-          _______     ______    _______
-         /  _____|   /      |  |   ____|
-        |  |  ___   |  ,----'  |  |__
-        |  | |_  |  |  |       |   __|
-        |  |__|  |  |  `----.  |  |
-         \_______|   \______|  |__|
+          _____       _____      ______
+         / ____|     / ____|    |  ____|
+        | |  __     | |         | |__
+        | | |_ |    | |         |  __|
+        | |__| |    | |____     | |
+         \_____|     \_____|    |_|
 
-      G-Cores Fans  ---  A Gadio Info Tool
+  G-Cores(g-cores.com) Fans --- A Gadio Info Tool
     """
-
-    if ctx.invoked_subcommand == 'tester':
-        return
 
     if ctx.invoked_subcommand == 'update':
         return
 
-    col = filter(None, col.split('#'))
-    col = map((lambda x: 'radio_' + str(x)), col)
+    col = map((lambda x: 'radio_' + str(x)), filter(None, col.split('#')))
 
     dj_pd = gm.kw_mining(gm.df_pk(path),
                          u'radio_dj',
@@ -60,7 +58,9 @@ def gcf(ctx, dj, prog, time, title, expt, col, path):
                             u'radio_title',
                             filter(None, title.split('#')))
 
-    final_pd = gm.timing_mining(title_pd, time[0], time[1])
+    time_pd = gm.timing_mining(title_pd, time[0], time[1])
+
+    final_pd = gm.recent(time_pd, recent)
 
     if expt:
         final_pd.to_csv('./gcf.cvs', encoding='utf-8', index=False)
@@ -76,7 +76,7 @@ def gcf(ctx, dj, prog, time, title, expt, col, path):
 
     if ctx.invoked_subcommand is None:
         gm.df_print(final_pd, col)
-
+        return
     return
 
 

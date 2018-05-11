@@ -7,6 +7,8 @@ from time import *
 from tabulate import tabulate
 import pandas as pd
 
+pd.options.mode.chained_assignment = None
+
 
 def df_pk(path=''):
     """
@@ -39,7 +41,7 @@ def df_print(df, col=[]):
 
 def kw_mining(df, col, kw=[]):
 
-    if col == 'radio_program':
+    if col in ['radio_program', 'radio_title']:
         prog_str = '|'.join(kw)
         final = df.loc[df[col].str.contains(prog_str, na=False)]
         return final
@@ -48,7 +50,6 @@ def kw_mining(df, col, kw=[]):
     for i in kw:
         kw_rows = df.loc[df[col].str.contains(i, na=False)]
         final = pd.merge(final, kw_rows)
-
     return final
 
 
@@ -65,6 +66,10 @@ def timing_mining(df, t_start='19850611', t_end='20850611'):
         t2 = mktime(strptime('20850611', "%Y%m%d"))
     timing = df.loc[(df['time_stamp'] <= t2) & (df['time_stamp'] >= t1)]
     return timing
+
+
+def recent(df, count):
+    return df.head(count)
 
 
 def care_mode(df, base_cvs, grading='Y', p=True, r=2):

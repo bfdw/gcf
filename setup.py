@@ -6,13 +6,13 @@ import setuptools
 description = 'A Gadio infomation mining tool for fans of g-cores.com.'
 
 params = dict(name='gcf',
-              version='0.0.4',
+              version='0.0.1.dev1',
               description=description,
               author='riceknight',
               author_email='riceknight@outlook.com',
               packages=setuptools.find_packages(),
               include_package_data=True,
-              url='https://github.com/bfdw',
+              url='https://github.com/bfdw/gcf',
               license='MIT',
               download_url='https://github.com/bfdw/gcf',
               python_requires='>=2.7',
@@ -25,9 +25,9 @@ params = dict(name='gcf',
                   'tabulate',
               ],
               entry_points='''
-        [console_scripts]
-        gcf=gcf.gcf:main
-      ''',)
+                    [console_scripts]
+                    gcf=gcf.gcf:main
+              ''',)
 
 if __name__ == '__main__':
     setuptools.setup(**params)
