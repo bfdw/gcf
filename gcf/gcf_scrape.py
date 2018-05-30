@@ -45,7 +45,6 @@ def scrape_radio_list(deep_update=False):
             showcase_text = i.find('div', class_='showcase_text')
             radio_title = showcase_text.find('h4').get_text()
             radio_title = radio_title.strip()
-
             radio_url = showcase_text.find('a').get('href')
             if not (gcf_data['radio_url'] == radio_url).any():
                 radio_disc['radio_index'] = radio_index[0] +\
@@ -101,10 +100,18 @@ def scrape_radio_info(vol_url):
     radio_mp3 = soup.find('p', 'story_actions').find('a').get('href')
     radio_disc['radio_url'] = vol_url
     radio_disc['radio_dj'] = radio_djss
-    radio_disc['dj_list'] = radio_djs
+    # radio_disc['dj_list'] = radio_djs
     radio_disc['radio_img'] = radio_img
     radio_disc['radio_mp3'] = radio_mp3
     return radio_disc
+
+
+def drop_raido():
+    path = os.path.dirname(__file__) + '/gcf_data.csv'
+    gcf_data = pd.read_csv(path, encoding='utf-8')
+    gcf_data = gcf_data.iloc[0:0]
+    gcf_data.to_csv(path, encoding='utf-8', index=False)
+    return
 
 
 def main():

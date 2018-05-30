@@ -113,6 +113,14 @@ def statistic(ctx):
     return
 
 
+@gcf.command()
+@click.pass_context
+def drop(ctx):
+    """Drop all radio information"""
+    gs.drop_raido()
+    return
+
+
 def main():
     gcf(obj={})
 
