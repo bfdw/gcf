@@ -100,7 +100,6 @@ def scrape_radio_info(vol_url):
     radio_mp3 = soup.find('p', 'story_actions').find('a').get('href')
     radio_disc['radio_url'] = vol_url
     radio_disc['radio_dj'] = radio_djss
-    # radio_disc['dj_list'] = radio_djs
     radio_disc['radio_img'] = radio_img
     radio_disc['radio_mp3'] = radio_mp3
     return radio_disc
