@@ -1,16 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # from setuptools import setup, find_packages
-import setuptools
+from setuptools import setup, find_packages
+from codecs import open
+from os import path
+
+here = path.abspath(path.dirname(__file__))
+
+# Get the long description from the README file
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 description = 'A Gadio infomation mining tool for fans of g-cores.com.'
 
 params = dict(name='gcf',
-              version='0.0.1.dev1',
+              version='0.0.3.dev1',
               description=description,
+              long_description=long_description,
+              long_description_content_type='text/markdown',
               author='riceknight',
               author_email='riceknight@outlook.com',
-              packages=setuptools.find_packages(),
+              packages=find_packages(),
               include_package_data=True,
               url='https://github.com/bfdw/gcf',
               license='MIT',
@@ -30,4 +40,4 @@ params = dict(name='gcf',
               ''',)
 
 if __name__ == '__main__':
-    setuptools.setup(**params)
+    setup(**params)
