@@ -5,16 +5,16 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-here = path.abspath(path.dirname(__file__))
+readme = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(readme, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 description = 'A Gadio infomation mining tool for fans of g-cores.com.'
 
 params = dict(name='gcf',
-              version='0.0.3.dev1',
+              version='0.0.1.dev1',
               description=description,
               long_description=long_description,
               long_description_content_type='text/markdown',

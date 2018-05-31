@@ -22,8 +22,7 @@ import gcf_scrape as gs
 @click.option('--expt', '-e', default=False, is_flag=True,
               help='Export data to a cvs file')
 @click.option('--col', '-c', default='date#title#dj',
-              help='Show data with specific columns as -tb \'date#title#dj\'\
-              Columns set: date,title,dj,program,index,url,mp3.')
+              help='Show data with specific columns as -tb \'date#title#dj\'')
 @click.option('--path', '-pt', default='',
               help='Give the path to loading another cvs data.')
 @click.option('--recent', '-r', default=9999,
