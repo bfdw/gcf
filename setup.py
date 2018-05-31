@@ -14,7 +14,7 @@ with open(path.join(readme, 'README.md'), encoding='utf-8') as f:
 description = 'A Gadio infomation mining tool for fans of g-cores.com.'
 
 params = dict(name='gcf',
-              version='0.0.1.dev1',
+              version='0.0.3.dev2',
               description=description,
               long_description=long_description,
               long_description_content_type='text/markdown',
