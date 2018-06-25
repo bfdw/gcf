@@ -20,20 +20,6 @@ gcf career --help
 gcf update --help
 ```
 
-## 查询示例：
-
-过去100期里，谁成为了四十二的心头好？
-
-2017年，是谁在哪儿镲了Hardy？
-
-四十二的出台率是多少？
-
-最近谁还在主持Gadio常规节目？
-
-网站上有多少期节目没有标注主持人？都是哪几期？
-
-(Please find the answer at the end.)
-
 ## 简单查询示例
 
 进行查询前，请先更新数据
@@ -77,7 +63,7 @@ gcf -t 20180101 20180531
 gcf --time 20180101 20180531
 ```
 
-导出数据到当前目录下的gcf.cvs
+导出数据到当前目录下的gcf.csv
 
 ```
 gcf -e
@@ -127,37 +113,4 @@ gcf --dj '西蒙' --time 20170101 20171231 career --size M --ratio 0.2 --perc
 
 ```
 gcf statistic
-```
-
-## HB查询示例
-
-过去100期里，谁成为了四十二的心头好？
-
-```
-gcf --recent 100 --dj '四十二' statistic
-```
-
-2017年，是谁在哪叉了Hardy？
-
-```
-gcf --dj 'Hardy' --time 20170101 20171231 statistic
-```
-
-四十二的出台率是多少？（Y年度出台率，Q季度出台率，M月度出台率）
-
-```
-gcf --dj '四十二' career --size Q --ratio 0.2 --perc
-```
-
-最近谁还在主持Gadio常规节目？
-
-```
-gcf --prog 'gadio' --recent 20 statistic
-```
-
-网站上有多少期节目没有标注主持人？都是哪几期？
-
-```
-gcf --dj 'NULL' statistic
-gcf --dj 'NULL' --col '#date#title#index'
 ```
