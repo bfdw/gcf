@@ -27,15 +27,16 @@ def df_print(df, col=[]):
     dataframe_print
     Pretty print a Datafram as the result
     """
+
     def_col = ['radio_date', 'radio_title', 'radio_dj'] if col == [] else col
+    def_col = list(def_col)
     try:
         df.reset_index(drop=True, inplace=True)
         df.index += 1
         df.radio_dj = df.radio_dj.str.replace('###', ',')
-        print tabulate(df[def_col], headers='keys', tablefmt='psql')\
-            .encode('utf-8')
+        print(tabulate(df[def_col], headers='keys', tablefmt='psql'))
     except (KeyError, AttributeError):
-        print tabulate(df, headers='keys', tablefmt='psql')
+        print(tabulate(df, headers='keys', tablefmt='psql'))
     return
 
 
@@ -61,7 +62,7 @@ def timing_mining(df, t_start='19850611', t_end='20850611'):
         t1 = mktime(strptime(t_start, "%Y%m%d"))
         t2 = mktime(strptime(t_end, "%Y%m%d"))
     except ValueError:
-        print('Warning: Time value should be inputed as \'YYYYMMDD\'.')
+        print("Warning: Time value should be inputed as \'YYYYMMDD\'.")
         t1 = mktime(strptime('19850611', "%Y%m%d"))
         t2 = mktime(strptime('20850611', "%Y%m%d"))
     timing = df.loc[(df['time_stamp'] <= t2) & (df['time_stamp'] >= t1)]
@@ -87,11 +88,11 @@ def care_mode(df, base_cvs, grading='Y', p=True, r=2):
         gs['M'] = gs.apply(lambda row: row.radio_date[0:7], axis=1)
     elif grading is 'Q':
         kw['Q'] = kw.apply(lambda row: (int(row.radio_date[5:7]) - 1), axis=1)
-        kw['Q'] = kw.apply(lambda row: str(row.Q / 3 + 1), axis=1)
+        kw['Q'] = kw.apply(lambda row: str(int(row.Q / 3 + 1)), axis=1)
         kw['Q'] = kw.apply(lambda row: '-Q' + row.Q, axis=1)
         kw['Q'] = kw.apply(lambda row: row.radio_date[0:4] + row.Q, axis=1)
         gs['Q'] = gs.apply(lambda row: (int(row.radio_date[5:7]) - 1), axis=1)
-        gs['Q'] = gs.apply(lambda row: str(row.Q / 3 + 1), axis=1)
+        gs['Q'] = gs.apply(lambda row: str(int(row.Q / 3 + 1)), axis=1)
         gs['Q'] = gs.apply(lambda row: '-Q' + row.Q, axis=1)
         gs['Q'] = gs.apply(lambda row: row.radio_date[0:4] + row.Q, axis=1)
 
@@ -109,15 +110,15 @@ def care_mode(df, base_cvs, grading='Y', p=True, r=2):
 
     if p:
         for index, row in final.iterrows():
-            print row.i, '|', "%3s" % row.c,\
-                '|' + '█' * int(row.c / r) +\
-                '□' * int(row.d / r) +\
-                '|', str(row.t), '(' + row.p + ')'
+            print(row.i, '|', "%3s" % row.c,
+                  '|' + '█' * int(row.c / r) +
+                  '□' * int(row.d / r) +
+                  '|', str(row.t), '(' + row.p + ')')
     else:
         for index, row in final.iterrows():
-            print row.i,\
-                '|', "%3s" % int(row.c),\
-                '|' + '█' * int(row.c / r) + '|'
+            print(row.i,
+                  '|', "%3s" % int(row.c),
+                  '|' + '█' * int(row.c / r) + '|')
     return
 
 
@@ -130,7 +131,7 @@ def stat_mode(df):
     pg = pg.sort_values(by=['radio_title'], ascending=False).reset_index()
     pg.index += 1
     pg.columns = ['Program', 'Count']
-    print tabulate(pg, headers='keys', tablefmt='psql').encode('utf-8')
+    print(tabulate(pg, headers='keys', tablefmt='psql'))
     dj = {}
     for i in df.radio_dj.tolist():
         for j in i.split('###'):
@@ -138,16 +139,16 @@ def stat_mode(df):
                 dj[j] += 1
             else:
                 dj[j] = 1
-    dj = pd.DataFrame(dj.items())
+    dj = pd.DataFrame(list(dj.items()))
     dj.columns = ['DJ', 'Count']
     dj = dj.sort_values(by=['Count'], ascending=False).reset_index(drop=True)
     dj.index += 1
-    print tabulate(dj, headers='keys', tablefmt='psql').encode('utf-8')
+    print(tabulate(dj, headers='keys', tablefmt='psql'))
     return
 
 
 def main():
-    print 'This is not an independent package.'
+    print("This is not an independent package.")
     return
 
 

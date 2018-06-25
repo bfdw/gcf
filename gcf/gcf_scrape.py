@@ -4,6 +4,7 @@
 
 import os
 import re
+import sys
 from time import *
 
 import requests
@@ -32,10 +33,10 @@ def scrape_radio_list(deep_update=False):
         soup = bs4.BeautifulSoup(page, "html.parser")
         radio_cases = soup.find_all('div', class_='showcase')
         if len(radio_cases) == 0:
-            print('Gadio数据重载完毕')
+            print("Gadio数据重载完毕")
             break
         else:
-            print '取得Gadio页面数据', str(page_num), '...'
+            print("取得Gadio页面数据" + str(page_num) + "...")
         page_num += 1
         for i in radio_cases:
             showcase_time = i.find('div', class_='showcase_time')
@@ -47,8 +48,7 @@ def scrape_radio_list(deep_update=False):
             radio_title = radio_title.strip()
             radio_url = showcase_text.find('a').get('href')
             if not (gcf_data['radio_url'] == radio_url).any():
-                radio_disc['radio_index'] = radio_index[0] +\
-                    ': ' +\
+                radio_disc['radio_index'] = radio_index[0] + ': ' +\
                     radio_index[1]
                 radio_disc['radio_program'] = radio_index[0]
                 radio_disc['program_index'] = radio_index[1]
@@ -59,7 +59,10 @@ def scrape_radio_list(deep_update=False):
                 radio_disc['radio_url'] = radio_url
                 radio_disc.update(scrape_radio_info(radio_url))
                 gcf_data = gcf_data.append(radio_disc, ignore_index=True)
-                print(u'更新节目： ' + radio_title).encode('utf-8')
+                if sys.version_info >= (3, 0):
+                    print("更新节目： " + radio_title)
+                else:
+                    print("更新节目： " + radio_title.encode('utf-8'))
             elif deep_update:
                 sleep(1)
                 pass
@@ -69,7 +72,7 @@ def scrape_radio_list(deep_update=False):
     gcf_data = gcf_data.sort_values(by=['radio_date'], ascending=False)
     gcf_data.reset_index(drop=True, inplace=True)
     gcf_data.to_csv(path, encoding='utf-8', index=False)
-    print('Misson Complete!')
+    print("Misson Complete!")
     return
 
 

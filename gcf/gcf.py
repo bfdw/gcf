@@ -4,8 +4,8 @@
 
 import click
 
-import gcf_mining as gm
-import gcf_scrape as gs
+from . import gcf_mining as gm
+from . import gcf_scrape as gs
 
 
 @click.group(invoke_without_command=True, no_args_is_help=True)
@@ -62,7 +62,7 @@ def gcf(ctx, dj, prog, time, title, expt, col, path, recent):
     final_pd = gm.recent(time_pd, recent)
 
     if expt:
-        final_pd.to_csv('./gcf.cvs', encoding='utf-8', index=False)
+        final_pd.to_csv('./gcf.csv', encoding='utf-8', index=False)
 
     if ctx.invoked_subcommand == 'career':
         ctx.obj['final_pd'] = final_pd
